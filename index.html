@@ -7,7 +7,7 @@
 <title>Heart of Oklahoma Corvette Club</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <header class="site-header">
   <div class="wrap header-top">
     <a class="brand" href="index.html"><img src="images/1b97d2c0-HOCC-Logo.png" alt="Heart of Oklahoma Corvette Club logo"><span>Heart of Oklahoma Corvette Club</span></a>
-    <a class="join-btn" href="membership.html">Join / Renew Membership</a>
+    <a class="join-btn" href="membership.html"><span class="l-full">Register / Renew</span><span class="l-short">Register</span></a>
     <details class="menu"><summary>Menu</summary><ul><li><a href="index.html" aria-current="page">Home</a></li><li><a href="about.html">About &amp; Officers</a></li><li><a href="events.html">Events</a></li><li><a href="gallery.html">Photos</a></li><li><a href="contact.html">Contact</a></li></ul></details>
   </div>
   <nav class="nav" aria-label="Main">
@@ -31,18 +31,15 @@
 
 <main id="main">
   <div class="hero">
-    <div class="hero-grid">
-      <div class="hero-text">
-        <p class="label hide-m">Oklahoma Corvette club &middot; Not-For-Profit &middot; 501(c)(3)</p>
-        <h1>Corvette people, good company, and a hand for those in need.</h1>
-        <hr class="rule hide-m">
-        <p class="hide-m">We are a club of Corvette owners who take part in events and social activities together, and who are willing to support those in need, assist with charitable events and support our local schools and other community activities.</p>
-        <div class="btn-row hide-m">
-          <a class="btn gold" href="membership.html">Join / Renew Membership</a>
-          <a class="btn light" href="events.html">See Upcoming Events</a>
-        </div>
+    <img class="hero-img" src="images/42bc1aed-CS-1.jpg" alt="Rows of Corvettes with hoods raised at a car show inside the Southeast EXPO Center">
+    <div class="wrap hero-text">
+      <p class="eyebrow hide-m">Oklahoma Corvette club &middot; Not-For-Profit &middot; 501(c)(3)</p>
+      <h1>Corvette people, good company, and a hand for those in need.</h1>
+      <p class="hide-m">We are a club of Corvette owners who take part in events and social activities together, and who are willing to support those in need, assist with charitable events and support our local schools and other community activities.</p>
+      <div class="btn-row">
+        <a class="btn gold" href="membership.html">Register / Renew Membership</a>
+        <a class="btn light hide-m" href="events.html">Upcoming events</a>
       </div>
-      <div class="hero-photo"><img src="images/42bc1aed-CS-1.jpg" alt="Rows of Corvettes with hoods raised at a car show inside the Southeast EXPO Center"></div>
     </div>
   </div>
 
@@ -74,20 +71,33 @@
     <div class="wrap">
       <p class="label">On the calendar</p>
       <h2>Coming up</h2>
-      <ul class="events">
-        <li class="event">
-          <div class="date"><span class="m">Oct</span><span class="d">17</span><span class="r">2026</span></div>
-          <div><h3>October Membership Meeting</h3><p>Yellow Rose Dinner Theater, Moore &middot; 1&ndash;3pm</p></div>
+      <ul class="events" data-list="home">
+        <li class="event" data-end="2026-10-25">
+          <div class="date"><span class="m">Oct</span><span class="d">23&ndash;25</span></div>
+          <div><h3>HOCC's Annual Fall Foliage Corvette Cruise Adventure</h3><p>Cherokee Casino &amp; Hotel Roland, 109 Cherokee Blvd, Roland, OK 74954 &middot; 9 am</p></div>
         </li>
-        <li class="event">
-          <div class="date"><span class="m">Oct</span><span class="d">23&ndash;25</span><span class="r">2026</span></div>
-          <div><h3>Annual Fall Foliage Corvette Cruise Adventure</h3><p>Cherokee Casino &amp; Hotel Roland, 109 Cherokee Blvd, Roland, OK 74954 &middot; 9am</p></div>
+        <li class="event" data-end="2026-11-03">
+          <div class="date"><span class="m">Nov</span><span class="d">3</span></div>
+          <div><h3>HOCC Board Meeting</h3><p>Van's Pig Stand, 1991 Tower Dr, Moore, OK 73160 &middot; 6:00 pm &ndash; 8:00 pm</p></div>
         </li>
-        <li class="event extra-m">
-          <div class="date"><span class="m">Nov</span><span class="d">4</span><span class="r">2026</span></div>
-          <div><h3>Ladies Night Out Dinner</h3><p>BJ's Restaurant &amp; Brewhouse, 330 Ed Noble Pkwy, Norman &middot; 7&ndash;9pm</p></div>
+        <li class="event over-m" data-end="2026-11-04">
+          <div class="date"><span class="m">Nov</span><span class="d">4</span></div>
+          <div><h3>HOCC Ladies Night Out Dinner</h3><p>BJ's Restaurant &amp; Brewhouse, 330 Ed Noble Pkwy, Norman, OK 73072 &middot; 7:00 pm &ndash; 9:00 pm</p></div>
+        </li>
+        <li class="event over" data-end="2026-11-11">
+          <div class="date"><span class="m">Nov</span><span class="d">11</span></div>
+          <div><h3>Midwest City Veterans Day Parade</h3><p>Midwest City, OK &middot; 8:00 am &ndash; 3:30 pm</p></div>
+        </li>
+        <li class="event over" data-end="2026-11-21">
+          <div class="date"><span class="m">Nov</span><span class="d">21</span></div>
+          <div><h3>HOCC November Membership Meeting</h3><p>Yellow Rose Dinner Theater, 1005 SW 4th St, Moore, OK &middot; 1:00 pm &ndash; 3:00 pm</p></div>
+        </li>
+        <li class="event over" data-end="2026-12-12">
+          <div class="date"><span class="m">Dec</span><span class="d">12</span></div>
+          <div><h3>HOCC Christmas Party</h3><p>South Lakes Event Center, 4302 SW 119th St, OKC, OK 73173 &middot; 5:00 pm &ndash; 8:00 pm</p></div>
         </li>
       </ul>
+      <p class="no-events" id="no-events" hidden>No upcoming events listed. Check back soon or email <a href="mailto:hoccclub@gmail.com">hoccclub@gmail.com</a></p>
       <p><a class="btn dark" href="events.html">All upcoming events</a></p>
     </div>
   </section>
@@ -145,5 +155,6 @@
   </div>
 </footer>
 <a class="join-bar" href="membership.html">Join / Renew Membership</a>
+<script src="events.js" defer></script>
 </body>
 </html>

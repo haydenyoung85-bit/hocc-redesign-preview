@@ -7,7 +7,7 @@
 <title>Events - Heart of Oklahoma Corvette Club</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&family=Playfair+Display:wght@700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +15,7 @@
 <header class="site-header">
   <div class="wrap header-top">
     <a class="brand" href="index.html"><img src="images/1b97d2c0-HOCC-Logo.png" alt="Heart of Oklahoma Corvette Club logo"><span>Heart of Oklahoma Corvette Club</span></a>
-    <a class="join-btn" href="membership.html">Join / Renew Membership</a>
+    <a class="join-btn" href="membership.html"><span class="l-full">Register / Renew</span><span class="l-short">Register</span></a>
     <details class="menu"><summary>Menu</summary><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About &amp; Officers</a></li><li><a href="events.html" aria-current="page">Events</a></li><li><a href="gallery.html">Photos</a></li><li><a href="contact.html">Contact</a></li></ul></details>
   </div>
   <nav class="nav" aria-label="Main">
@@ -39,72 +39,58 @@
   <section>
     <div class="wrap narrow">
       <!-- TODO: the original site also had a calendar widget; no additional events were available. Club to confirm this list is current. -->
-      <ul class="events">
-        <li class="event">
-          <div class="date"><span class="m">Oct</span><span class="d">10</span><span class="r">2026</span></div>
+      <ul class="events" data-list="all">
+        <li class="event" data-end="2026-10-25">
+          <div class="date"><span class="m">Oct</span><span class="d">23&ndash;25</span></div>
           <div>
-            <h3>HOCC Tech Day <span class="tag">Already held</span></h3>
-            <p>Finley's Corvette Garage, 17118 N County Rd 3197, Pauls Valley, OK 73075</p>
-            <p>8:30am &ndash; 4pm</p>
-          </div>
-        </li>
-        <li class="event">
-          <div class="date"><span class="m">Oct</span><span class="d">17</span><span class="r">2026</span></div>
-          <div>
-            <h3>October Membership Meeting</h3>
-            <p>Yellow Rose Dinner Theater, Moore</p>
-            <p>1 &ndash; 3pm</p>
-          </div>
-        </li>
-        <li class="event">
-          <div class="date"><span class="m">Oct</span><span class="d">17</span><span class="r">2026</span></div>
-          <div>
-            <h3>Farewell Gathering for Ron &amp; Dannise Parker</h3>
-            <p>Hidalgo's Mexican Restaurant &amp; Cantina, 2713 S I-35 Service Rd, Moore, OK 73160</p>
-            <p>3:30 &ndash; 5pm</p>
-          </div>
-        </li>
-        <li class="event">
-          <div class="date"><span class="m">Oct</span><span class="d">23&ndash;25</span><span class="r">2026</span></div>
-          <div>
-            <h3>Annual Fall Foliage Corvette Cruise Adventure</h3>
+            <h3>HOCC's Annual Fall Foliage Corvette Cruise Adventure</h3>
             <p>Cherokee Casino &amp; Hotel Roland, 109 Cherokee Blvd, Roland, OK 74954</p>
-            <p>9am</p>
+            <p>9 am</p>
           </div>
         </li>
-        <li class="event">
-          <div class="date"><span class="m">Nov</span><span class="d">4</span><span class="r">2026</span></div>
+        <li class="event" data-end="2026-11-03">
+          <div class="date"><span class="m">Nov</span><span class="d">3</span></div>
           <div>
-            <h3>Ladies Night Out Dinner</h3>
-            <p>BJ's Restaurant &amp; Brewhouse, 330 Ed Noble Pkwy, Norman, OK 73072</p>
-            <p>7 &ndash; 9pm</p>
+            <h3>HOCC Board Meeting</h3>
+            <p>Van's Pig Stand, 1991 Tower Dr, Moore, OK 73160</p>
+            <p>6:00 pm &ndash; 8:00 pm</p>
           </div>
         </li>
-        <li class="event">
-          <div class="date"><span class="m">Nov</span><span class="d">11</span><span class="r">2026</span></div>
+        <li class="event" data-end="2026-11-04">
+          <div class="date"><span class="m">Nov</span><span class="d">4</span></div>
+          <div>
+            <h3>HOCC Ladies Night Out Dinner</h3>
+            <p>BJ's Restaurant &amp; Brewhouse, 330 Ed Noble Pkwy, Norman, OK 73072</p>
+            <p>7:00 pm &ndash; 9:00 pm</p>
+          </div>
+        </li>
+        <li class="event" data-end="2026-11-11">
+          <div class="date"><span class="m">Nov</span><span class="d">11</span></div>
           <div>
             <h3>Midwest City Veterans Day Parade</h3>
-            <p>8am &ndash; 3:30pm</p>
+            <p>Midwest City, OK</p>
+            <p>8:00 am &ndash; 3:30 pm</p>
             <p class="todo">The original listing gives no street location for the parade. Club to add if wanted.</p>
           </div>
         </li>
-        <li class="event">
-          <div class="date"><span class="m">Nov</span><span class="d">21</span><span class="r">2026</span></div>
+        <li class="event" data-end="2026-11-21">
+          <div class="date"><span class="m">Nov</span><span class="d">21</span></div>
           <div>
-            <h3>November Membership Meeting</h3>
-            <p>Yellow Rose Dinner Theater, Moore</p>
-            <p>1 &ndash; 3pm</p>
+            <h3>HOCC November Membership Meeting</h3>
+            <p>Yellow Rose Dinner Theater, 1005 SW 4th St, Moore, OK</p>
+            <p>1:00 pm &ndash; 3:00 pm</p>
           </div>
         </li>
-        <li class="event">
-          <div class="date"><span class="m">Dec</span><span class="d">12</span><span class="r">2026</span></div>
+        <li class="event" data-end="2026-12-12">
+          <div class="date"><span class="m">Dec</span><span class="d">12</span></div>
           <div>
-            <h3>Christmas Party</h3>
-            <p>South Lakes Event Center, 4302 SW 119th St, Oklahoma City, OK 73173</p>
-            <p>5 &ndash; 8pm</p>
+            <h3>HOCC Christmas Party</h3>
+            <p>South Lakes Event Center, 4302 SW 119th St, OKC, OK 73173</p>
+            <p>5:00 pm &ndash; 8:00 pm</p>
           </div>
         </li>
       </ul>
+      <p class="no-events" id="no-events" hidden>No upcoming events listed. Check back soon or email <a href="mailto:hoccclub@gmail.com">hoccclub@gmail.com</a></p>
     </div>
   </section>
 
@@ -150,5 +136,6 @@
   </div>
 </footer>
 <a class="join-bar" href="membership.html">Join / Renew Membership</a>
+<script src="events.js" defer></script>
 </body>
 </html>
