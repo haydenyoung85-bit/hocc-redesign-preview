@@ -78,3 +78,16 @@
   .pt-banner .pt-btn.pt-banner-x { top: .4rem; transform: none; }
   .pt-banner-go { width: 100%; }
 }
+
+/* while the tour runs: keep floating UI out of the way */
+body.pt-running .pt-launch { display: none !important; }
+body.pt-running .join-bar { display: none !important; }
+body.pt-running.pt-bar-step .join-bar { display: flex !important; z-index: 10002; }
+.pt-card.pt-compact { padding: .6rem 1rem .7rem; }
+.pt-card.pt-compact .pt-title { font-size: 20px; margin: .1rem 0 .2rem; }
+.pt-card.pt-compact .pt-text { margin-bottom: .5rem; }
+.pt-card.pt-compact .pt-btn { min-height: 48px; }
+/* phones: no floating button (tour is in the preview banner and the Menu) */
+@media (max-width: 700px) {
+  .pt-launch { display: none !important; }
+}

@@ -72,6 +72,8 @@
 
   function buildSteps(defs) {
     var mobile = isMobile(), out = [];
+    var running = document.body.classList.contains('pt-running');
+    document.body.classList.remove('pt-running');   // measure with the page's normal UI visible
     defs.forEach(function (d) {
       if (d.only === 'mobile' && !mobile) return;
       if (d.only === 'desktop' && mobile) return;
@@ -82,6 +84,7 @@
       }
       out.push({ def: d, el: el, matchedMobile: !!(el && el.matches && el.matches('.menu > summary')) });
     });
+    if (running) document.body.classList.add('pt-running');
     return out;
   }
 
@@ -114,6 +117,9 @@
     document.addEventListener('keydown', onKey, true);
     window.addEventListener('resize', onResize);
     window.addEventListener('scroll', schedule, true);
+    window.addEventListener('orientationchange', onResize);
+    window.addEventListener('load', onResize);
+    Array.prototype.forEach.call(document.images, function (im) { if (!im.complete) im.addEventListener('load', onResize, { once: true }); });
     render(true);
   }
 
@@ -156,11 +162,62 @@
     T.card.style.visibility = 'hidden';
     T.card.style.left = T.card.style.top = '0px';
 
-    if (s.el) bringIntoView(s.el);
-    decideDock();
+    var isBar = !!(s.el && s.el.matches('.join-bar'));
+    document.body.classList.add('pt-running');
+    document.body.classList.toggle('pt-bar-step', isBar);
+    T.card.classList.remove('pt-compact');
+    T.card.style.bottom = '';
+    if (isMobile()) layoutMobile(s, isBar);
+    else { if (s.el) bringIntoView(s.el); decideDock(); }
     place();
     T.card.style.visibility = '';
     T.card.focus({ preventScroll: true });
+  }
+
+  function rectsOverlap(a, b) {
+    return !(a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top);
+  }
+
+  /* Mobile: dock the card top or bottom, and scroll the target into the free part of the screen. */
+  function layoutMobile(s, isBar) {
+    var vh = window.innerHeight;
+    T.card.classList.add('pt-mob');
+    T.dockTop = false;
+    T.card.classList.remove('pt-top');
+    if (!s.el) return;
+    if (isBar) {                       // card sits just above the bar
+      T.card.style.bottom = (s.el.getBoundingClientRect().height + PAD + 6) + 'px';
+      return;
+    }
+    if (isPinned(s.el)) {              // header items: target is at the top, so card goes to the bottom
+      var pr = s.el.getBoundingClientRect();
+      T.dockTop = pr.top + pr.height / 2 > vh / 2;
+      T.card.classList.toggle('pt-top', T.dockTop);
+      return;
+    }
+    s.el.scrollIntoView({ block: 'center', inline: 'nearest' });
+    var r0 = s.el.getBoundingClientRect();
+    T.dockTop = (r0.top + r0.height / 2) > vh / 2 + 1;
+    for (var attempt = 0; attempt < 2; attempt++) {
+      T.card.classList.toggle('pt-top', T.dockTop);
+      var cardH = T.card.offsetHeight;
+      var freeTop = T.dockTop ? cardH + 8 : headerBottom() + 8;
+      var freeBot = T.dockTop ? vh - 8 : vh - cardH - 8;
+      var r = s.el.getBoundingClientRect();
+      if (r.height + 2 * PAD > freeBot - freeTop && !T.card.classList.contains('pt-compact')) {
+        T.card.classList.add('pt-compact');
+        cardH = T.card.offsetHeight;
+        freeTop = T.dockTop ? cardH + 8 : headerBottom() + 8;
+        freeBot = T.dockTop ? vh - 8 : vh - cardH - 8;
+      }
+      if (r.height + 2 * PAD > freeBot - freeTop) window.scrollBy(0, r.top - PAD - freeTop);
+      else window.scrollBy(0, (r.top + r.height / 2) - (freeTop + freeBot) / 2);
+      r = s.el.getBoundingClientRect();
+      var c = T.card.getBoundingClientRect();
+      var visTop = Math.max(r.top, 0), visBot = Math.min(r.bottom, vh);
+      if (!rectsOverlap({ left: r.left, right: r.right, top: visTop, bottom: visBot }, c)) return;
+      T.dockTop = !T.dockTop;          // page could not scroll far enough: try the other side
+    }
   }
 
   function headerBottom() {
@@ -170,21 +227,20 @@
   }
 
   function bringIntoView(el) {
-    var mobile = isMobile();
-    // the card must be laid out so we know how much room it takes
-    if (mobile) { T.card.classList.add('pt-mob'); }
     el.scrollIntoView({ block: 'center', inline: 'nearest' });
     if (isPinned(el)) return;
-    var vh = window.innerHeight;
-    var cardH = mobile ? T.card.offsetHeight : 0;
-    var top = headerBottom() + 8;
-    var bottom = vh - cardH - 8;
+    var vh = window.innerHeight, gap = 16, m = 16, hb = headerBottom();
     var r = el.getBoundingClientRect();
-    var avail = bottom - top;
-    if (r.height > avail - 16) {
-      window.scrollBy(0, r.top - top);          // tall target: align its top
-    } else if (mobile) {
-      window.scrollBy(0, (r.top + r.height / 2) - (top + bottom) / 2);
+    var ch = T.card.offsetHeight;
+    var vw = window.innerWidth, cw = T.card.offsetWidth;
+    var sideRoom = (vw - r.right >= cw + gap + m) || (r.left >= cw + gap + m);
+    if (r.height + 2 * PAD + gap + ch <= vh - hb - 2 * m) {
+      // room for target + card below it: put the target just under the header
+      if (r.bottom + PAD + gap + ch > vh - m) window.scrollBy(0, r.top - PAD - hb - m);
+    } else if (!sideRoom) {
+      // too tall: compact card at the bottom, target's top under the header, spotlight clipped above the card
+      T.card.classList.add('pt-compact');
+      window.scrollBy(0, r.top - PAD - hb - m);
     }
   }
 
@@ -220,7 +276,7 @@
       }
     }
 
-    if (mobile) { T.card.style.left = T.card.style.top = ''; return; }
+    if (mobile) { T.card.style.left = T.card.style.top = ''; var cr = T.card.getBoundingClientRect(); if (!T.dockTop) clipSpot(cr.top); else clipSpotTop(cr.bottom); return; }
     if (!s.el) { T.card.style.left = T.card.style.top = ''; return; }
 
     var cw = T.card.offsetWidth, ch = T.card.offsetHeight, gap = 16, m = 16;
@@ -229,12 +285,28 @@
       left = Math.min(Math.max(r.left, m), vw - cw - m);
       if (r.top + r.height + gap + ch <= vh - m) topPos = r.top + r.height + gap;
       else if (r.top - gap - ch >= m) topPos = r.top - gap - ch;
-      else { left = (vw - cw) / 2; topPos = vh - ch - m; }   // target fills the screen
+      else if (vw - (r.left + r.width) >= cw + gap + m) { left = r.left + r.width + gap; topPos = Math.min(Math.max(r.top, headerBottom() + m), vh - ch - m); }
+      else if (r.left >= cw + gap + m) { left = r.left - gap - cw; topPos = Math.min(Math.max(r.top, headerBottom() + m), vh - ch - m); }
+      else { left = (vw - cw) / 2; topPos = vh - ch - m; }   // no room anywhere: last resort
     } else {
       left = (vw - cw) / 2; topPos = vh - ch - m;
     }
     T.card.style.left = left + 'px';
     T.card.style.top = topPos + 'px';
+    clipSpot(topPos);
+  }
+
+  function clipSpot(cardTop) {
+    var st = parseFloat(T.spot.style.top), sh = parseFloat(T.spot.style.height);
+    if (T.spot.style.display === 'none' || isNaN(st)) return;
+    var cr = T.card.getBoundingClientRect(), sl = parseFloat(T.spot.style.left), sw = parseFloat(T.spot.style.width);
+    var hOverlap = !(cr.right <= sl || sl + sw <= cr.left);
+    if (hOverlap && st + sh > cardTop - 8 && st < cardTop) T.spot.style.height = Math.max(cardTop - 8 - st, 0) + 'px';
+  }
+  function clipSpotTop(cardBottom) {
+    var st = parseFloat(T.spot.style.top), sh = parseFloat(T.spot.style.height);
+    if (T.spot.style.display === 'none' || isNaN(st)) return;
+    if (st < cardBottom + 8 && st + sh > cardBottom) { T.spot.style.top = (cardBottom + 8) + 'px'; T.spot.style.height = Math.max(st + sh - cardBottom - 8, 0) + 'px'; }
   }
 
   function schedule() {
@@ -263,6 +335,7 @@
     window.removeEventListener('scroll', schedule, true);
     [T.backdrop, T.spot, T.card].forEach(function (n) { if (n.parentNode) n.parentNode.removeChild(n); });
     T = null;
+    document.body.classList.remove('pt-running', 'pt-bar-step');
     var launcher = document.querySelector('.pt-launch');
     if (launcher) { launcher.hidden = false; positionLauncher(); launcher.focus({ preventScroll: true }); }
     if (params.has('tour') && window.history && history.replaceState) {
@@ -315,6 +388,20 @@
     window.addEventListener('load', positionLauncher);
   }
 
+  function addMenuLink() {
+    var ul = document.querySelector('.menu ul');
+    if (!ul) return;
+    var li = make('li', 'pt-menu-item');
+    var a = make('a', '', 'Take the tour');
+    a.href = '#tour';
+    a.addEventListener('click', function (e) {
+      e.preventDefault();
+      var d = a.closest('details'); if (d) d.open = false;
+      startForPage();
+    });
+    li.appendChild(a); ul.appendChild(li);
+  }
+
   function addBanner() {
     var dismissed = false;
     try { dismissed = localStorage.getItem(KEY) === '1'; } catch (e) {}
@@ -339,6 +426,7 @@
 
   function init() {
     addLauncher();
+    addMenuLink();
     if (isHome) addBanner();
     var t = params.get('tour');
     if (t === '1' && isHome) startTour(HOME);
