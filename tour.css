@@ -1,0 +1,80 @@
+/* PREVIEW TOUR: remove before launch. Styles for tour.js only. */
+.pt-launch {
+  position: fixed; left: 20px; bottom: 20px; z-index: 34;
+  min-height: 52px; padding: 0 1.7rem;
+  background: #0b5d6b; color: #fff; border: 3px solid #fff; border-radius: 999px;
+  font: 800 20px/1.2 "Plus Jakarta Sans", "Segoe UI", system-ui, Arial, sans-serif;
+  box-shadow: 0 6px 20px rgba(16, 36, 62, .4); cursor: pointer;
+}
+.pt-launch:hover { background: #083f4a; }
+.pt-launch:focus-visible { outline: 4px solid #f5a524; outline-offset: 2px; }
+.pt-launch[hidden] { display: none; }
+
+/* top banner (home page) */
+.pt-banner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: .5rem 1rem;
+  padding: .5rem 3.4rem .5rem 1rem; position: relative;
+  background: #10243e; color: #fff; text-align: center;
+  font: 600 18px/1.3 "Plus Jakarta Sans", "Segoe UI", system-ui, Arial, sans-serif;
+}
+.pt-banner-go {
+  min-height: 48px; padding: 0 1.2rem; border: 0; border-radius: 999px;
+  background: #f5a524; color: #10243e; font: inherit; font-weight: 800; cursor: pointer;
+}
+.pt-banner .pt-btn.pt-banner-x {
+  min-width: 48px; padding: 0; min-height: 48px; display: flex; align-items: center; justify-content: center;
+  position: absolute; right: .5rem; top: 50%; transform: translateY(-50%);
+  width: 48px; height: 48px; border: 2px solid #fff; border-radius: 50%;
+  background: transparent; color: #fff; font: 700 28px/1 Arial, sans-serif; cursor: pointer;
+}
+.pt-banner button:focus-visible { outline: 3px solid #fff; outline-offset: 2px; }
+
+/* tour layers */
+.pt-backdrop { position: fixed; inset: 0; z-index: 2147483000; background: transparent; }
+.pt-backdrop.pt-dim { background: rgba(0, 0, 0, .6); }
+.pt-spot {
+  position: fixed; z-index: 2147483001; pointer-events: none; box-sizing: border-box;
+  border-radius: 12px; outline: 4px solid #f5a524; outline-offset: 0;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, .6);
+}
+.pt-card {
+  position: fixed; z-index: 2147483002; box-sizing: border-box;
+  width: min(520px, calc(100vw - 32px)); max-height: calc(100vh - 32px); overflow-y: auto;
+  background: #fff; color: #10243e; border-radius: 16px; padding: 1.4rem 1.5rem 1.5rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, .45);
+  font: 500 20px/1.5 "Plus Jakarta Sans", "Segoe UI", system-ui, Arial, sans-serif;
+}
+.pt-card:focus { outline: none; }
+.pt-card.pt-center { left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.pt-count { margin: 0 0 .3rem; font-size: 18px; font-weight: 700; color: #0b5d6b; }
+.pt-title { margin: 0 0 .5rem; font-size: 26px; line-height: 1.2; font-weight: 800; color: #10243e; }
+.pt-text { margin: 0 0 1.2rem; font-size: 20px; }
+.pt-btns { display: flex; flex-wrap: wrap; gap: .6rem; }
+.pt-btn {
+  flex: 1 1 0; min-width: 5.5rem; min-height: 52px; padding: 0 1rem;
+  border-radius: 999px; border: 3px solid #10243e; cursor: pointer;
+  font: 800 20px/1.2 "Plus Jakarta Sans", "Segoe UI", system-ui, Arial, sans-serif;
+}
+.pt-primary { background: #0b5d6b; border-color: #0b5d6b; color: #fff; }
+.pt-primary:hover { background: #083f4a; border-color: #083f4a; }
+.pt-secondary { background: #fff; color: #10243e; }
+.pt-secondary:hover:not(:disabled) { background: #dcedf0; }
+.pt-btn:disabled { opacity: .45; cursor: default; }
+.pt-btn:focus-visible { outline: 4px solid #f5a524; outline-offset: 2px; }
+.pt-final .pt-btn { flex: 1 1 100%; }
+.pt-final .pt-back { order: 9; }
+
+/* phones: card docked full width, bottom (or top when the target sits low) */
+.pt-card.pt-mob {
+  left: 0; right: 0; bottom: 0; top: auto; width: auto; max-height: 70vh; transform: none;
+  border-radius: 16px 16px 0 0; padding-bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px));
+}
+.pt-card.pt-mob.pt-top { top: 0; bottom: auto; border-radius: 0 0 16px 16px; padding-bottom: 1.2rem; }
+@media (max-width: 700px) {
+  .pt-card { padding: 1rem 1rem 1.2rem; }
+  .pt-title { font-size: 24px; }
+  .pt-text { margin-bottom: .9rem; }
+  .pt-banner { font-size: 18px; justify-content: flex-start; text-align: left; padding: .5rem 4rem .6rem 1rem; }
+  .pt-banner .pt-btn.pt-banner-x { top: .4rem; transform: none; }
+  .pt-banner-go { width: 100%; }
+}
